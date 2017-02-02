@@ -16,28 +16,28 @@ class NeopixelLightPlugin(octoprint.plugin.StartupPlugin,
                            octoprint.plugin.AssetPlugin,
                            octoprint.plugin.TemplatePlugin):
 
-   def light_on(self):
+    def light_on(self):
        color = Color(255, 255, 255)
        showColor(self.strip, color)
 
-   def light_off(self):
+    def light_off(self):
        color = Color(0, 0, 0)
        showColor(self.strip, color)
 
-   def show_color(self, strip, color):
+    def show_color(self, strip, color):
        for i in range(strip.numPixels()):
            strip.setPixelColor(i, color)
        strip.show()
 
-   ##~~ StartupPlugin mixin
-   def on_after_startup(self):
+    ##~~ StartupPlugin mixin
+    def on_after_startup(self):
        # Create NeoPixel object with appropriate configuration.
        self.strip = Adafruit_NeoPixel(LED_COUNT, LED_Pin, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
        # Initialize the library (must be called once before other functions).
        self.strip.begin()
 
-   ##~~ EventHandlerPlugin mixin
-   def on_event(self, event, payload):
+    ##~~ EventHandlerPlugin mixin
+    def on_event(self, event, payload):
        if event == Events.PRINT_STARTED:
            self.light_on()
        elif event in (Events.PRINT_DONE, Events.PRINT_FAILED, Events.PRINT_CANCLLED):
